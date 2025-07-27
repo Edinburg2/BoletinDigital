@@ -9,35 +9,8 @@
     <title>Redirecting…</title>
     <script>
       document.addEventListener("DOMContentLoaded", function () {
-        // Increment counter first
-        fetch('/api/counter', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            page: 'boletin-digital',
-            timestamp: new Date().toISOString()
-          })
-        })
-        .then(response => {
-          if (!response.ok) {
-            throw new Error('Network response was not ok');
-          }
-          return response.json();
-        })
-        .then(data => {
-          console.log('Scan recorded. Total scans:', data.count);
-          // Then redirect
-          const pdfURL = "Anuncios.pdf?v=" + Date.now();
-          window.location.replace(pdfURL);
-        })
-        .catch(error => {
-          console.error('Error recording scan:', error);
-          // Still redirect even if counter fails
-          const pdfURL = "Anuncios.pdf?v=" + Date.now();
-          window.location.replace(pdfURL);
-        });
+        const pdfURL = "Anuncios.pdf?v=" + Date.now();
+        window.location.replace(pdfURL);
       });
     </script>
   </head>
