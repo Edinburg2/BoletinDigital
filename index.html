@@ -7,21 +7,29 @@
 <body>
     <p>Redirecting to the PDF...</p>
     
-    <!-- Counter script - this runs before redirect -->
+    <!-- Counter script using alternative CountAPI -->
     <script>
-        // Increment counter first
-        fetch('https://api.countapi.xyz/hit/boletindigital/edinburg2')
-            .then(response => response.json())
-            .then(data => {
-                console.log('QR Scan recorded. Total scans:', data.value);
-            })
-            .catch(err => {
-                console.log('Counter error (but redirect continues):', err);
-            })
-            .finally(() => {
-                // Always redirect to PDF after attempting to count
-                window.location.href = "Anuncios.pdf";
-            });
+        // Increment counter first using countapi.com
+        fetch('https://quick-counter.net/api/v1/counter/boletindigital-edinburg2', {
+            method: 'POST'
+        })
+        .then(response => {
+            if (response.ok) {
+                return response.json();
+            }
+            // Even if response isn't JSON, still consider it success
+            return { success: true };
+        })
+        .then(data => {
+            console.log('QR Scan recorded.');
+        })
+        .catch(err => {
+            console.log('Counter error (but redirect continues):', err);
+        })
+        .finally(() => {
+            // Always redirect to PDF after attempting to count
+            window.location.href = "Anuncios.pdf";
+        });
     </script>
 </body>
 </html>
